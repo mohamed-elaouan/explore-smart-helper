@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
-import { Target, Eye, Heart, Award, Users, Globe } from 'lucide-react';
+import { Target, Eye, Heart, Award, Users, Globe, Bold } from 'lucide-react';
 
 const values = [
   {
@@ -67,18 +67,6 @@ export default function About() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <img
-                src="https://images.unsplash.com/photo-1517137879013-d4bb8e29fc3b?w=600&h=500&fit=crop"
-                alt="RAD Morocco team"
-                className="rounded-2xl shadow-xl w-full"
-              />
-            </motion.div>
-            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -87,7 +75,7 @@ export default function About() {
               <h2 className="text-4xl font-serif font-bold mb-6">Our Story</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  RAD Morocco was founded by Radouane El Aouan with a simple mission: 
+                  RAD Morocco was founded by <strong> Radouane El Aouan </strong> with a simple mission: 
                   to share the extraordinary beauty and rich culture of Morocco with 
                   travelers from around the world.
                 </p>
@@ -104,6 +92,19 @@ export default function About() {
                 </p>
               </div>
             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <img
+                src="src\images\About\photo_5848272747682184119_y.jpg"
+                alt="RAD Morocco team"
+                className="rounded-2xl shadow-xl w-full"
+              />
+            </motion.div>
+            
           </div>
         </div>
       </section>

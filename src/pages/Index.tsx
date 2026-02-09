@@ -1,57 +1,69 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, MapPin, Calendar, Users, Star, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Layout } from '@/components/layout/Layout';
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  MapPin,
+  Calendar,
+  Users,
+  Star,
+  ChevronDown,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Layout } from "@/components/layout/Layout";
+import { useEffect, useState } from "react";
 
 const featuredTours = [
   {
     id: 1,
-    title: 'Imperial Cities Tour',
-    duration: '8 Days',
-    image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=600&h=400&fit=crop',
-    description: 'Explore Marrakech, Fes, Meknes, and Rabat',
-    price: 'From $1,200',
+    title: "Imperial Cities Tour",
+    duration: "8 Days",
+    image:
+      "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=600&h=400&fit=crop",
+    description: "Explore Marrakech, Fes, Meknes, and Rabat",
+    price: "From $1,200",
   },
   {
     id: 2,
-    title: 'Sahara Desert Adventure',
-    duration: '5 Days',
-    image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&h=400&fit=crop',
-    description: 'Camel treks, desert camps, and stargazing',
-    price: 'From $800',
+    title: "Sahara Desert Adventure",
+    duration: "5 Days",
+    image:
+      "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&h=400&fit=crop",
+    description: "Camel treks, desert camps, and stargazing",
+    price: "From $800",
   },
   {
     id: 3,
-    title: 'Morocco Gems',
-    duration: '12 Days',
-    image: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=400&fit=crop',
-    description: 'The complete Moroccan experience',
-    price: 'From $2,400',
+    title: "Morocco Gems",
+    duration: "12 Days",
+    image:
+      "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=400&fit=crop",
+    description: "The complete Moroccan experience",
+    price: "From $2,400",
   },
 ];
 
 const services = [
   {
     icon: MapPin,
-    title: 'Custom Tours',
-    description: 'Tailored itineraries designed around your interests and schedule',
+    title: "Custom Tours",
+    description:
+      "Tailored itineraries designed around your interests and schedule",
   },
   {
     icon: Calendar,
-    title: 'Flexible Booking',
-    description: 'Easy reservation process with personalized support',
+    title: "Flexible Booking",
+    description: "Easy reservation process with personalized support",
   },
   {
     icon: Users,
-    title: 'Expert Guides',
-    description: 'Local guides with deep knowledge of Moroccan culture',
+    title: "Expert Guides",
+    description: "Local guides with deep knowledge of Moroccan culture",
   },
   {
     icon: Star,
-    title: 'Premium Experience',
-    description: 'Handpicked accommodations and authentic experiences',
+    title: "Premium Experience",
+    description: "Handpicked accommodations and authentic experiences",
   },
 ];
 
@@ -74,30 +86,59 @@ const itemVariants = {
   },
 };
 
+
+// ... (featuredTours et services restent identiques)
+
+const cityImages = [
+  "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1920", // Exemple URL web
+  "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=1920",
+  // Note: Pour tes images locales, utilise le chemin relatif correct : "/images/bg_Index/download.jpg"
+];
+
 const Index = () => {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIdx((prevIdx) => (prevIdx + 1) % cityImages.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1548018560-c7196548e84d?w=1920&h=1080&fit=crop"
-            alt="Morocco landscape"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-foreground/40 to-foreground/80" />
-        </div>
+        
+        {/* Background Image avec transition fluide */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `url(${cityImages[idx]})`, // Correction : Ajout de url() et template literal
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            {/* Overlay pour la lisibilité du texte */}
+            <div className="absolute inset-0 bg-black/40" />
+          </motion.div>
+        </AnimatePresence>
 
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 text-center text-background">
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6">
-              Discover the Magic of{' '}
+              Discover the Magic of{" "}
               <span className="text-primary">Morocco</span>
             </h1>
           </motion.div>
@@ -106,10 +147,10 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-background/90"
+            className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90"
           >
-            Unforgettable journeys through ancient medinas, golden deserts, 
-            and breathtaking mountains with RAD Morocco
+            Unforgettable journeys through ancient medinas, golden deserts, and
+            breathtaking mountains with RAD Morocco
           </motion.p>
 
           <motion.div
@@ -121,7 +162,7 @@ const Index = () => {
             <Button
               asChild
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8"
+              className="bg-primary hover:bg-primary/90 text-white text-lg px-8"
             >
               <Link to="/reservation">
                 Start Your Journey
@@ -132,7 +173,7 @@ const Index = () => {
               asChild
               size="lg"
               variant="outline"
-              className="border-background text-background hover:bg-background/10 text-lg px-8"
+              className="border-white text-white hover:bg-white/10 text-lg px-8"
             >
               <Link to="/tours">Explore Tours</Link>
             </Button>
@@ -141,17 +182,11 @@ const Index = () => {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <ChevronDown className="w-8 h-8" />
-          </motion.div>
+          <ChevronDown className="w-8 h-8" />
         </motion.div>
       </section>
 
@@ -169,10 +204,11 @@ const Index = () => {
               Welcome to <span className="text-primary">RAD</span> Morocco
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              We are passionate about sharing the beauty and culture of Morocco with travelers 
-              from around the world. From the bustling souks of Marrakech to the serene dunes 
-              of the Sahara, we create personalized journeys that immerse you in authentic 
-              Moroccan experiences.
+              We are passionate about sharing the beauty and culture of Morocco
+              with travelers from around the world. From the bustling souks of
+              Marrakech to the serene dunes of the Sahara, we create
+              personalized journeys that immerse you in authentic Moroccan
+              experiences.
             </p>
           </motion.div>
         </div>
@@ -187,9 +223,12 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-serif font-bold mb-4">Why Choose RAD Morocco</h2>
+            <h2 className="text-4xl font-serif font-bold mb-4">
+              Why Choose RAD Morocco
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We combine local expertise with personalized service to create unforgettable travel experiences
+              We combine local expertise with personalized service to create
+              unforgettable travel experiences
             </p>
           </motion.div>
 
@@ -207,8 +246,12 @@ const Index = () => {
                     <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
                       <service.icon className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-xl font-serif font-semibold mb-3">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
+                    <h3 className="text-xl font-serif font-semibold mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {service.description}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -226,9 +269,12 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-serif font-bold mb-4">Featured Tours</h2>
+            <h2 className="text-4xl font-serif font-bold mb-4">
+              Featured Tours
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore our most popular journeys through Morocco's most captivating destinations
+              Explore our most popular journeys through Morocco's most
+              captivating destinations
             </p>
           </motion.div>
 
@@ -256,10 +302,16 @@ const Index = () => {
                     </div>
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-serif font-semibold mb-2">{tour.title}</h3>
-                    <p className="text-muted-foreground mb-4">{tour.description}</p>
+                    <h3 className="text-xl font-serif font-semibold mb-2">
+                      {tour.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">
+                      {tour.description}
+                    </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-primary">{tour.price}</span>
+                      <span className="text-lg font-semibold text-primary">
+                        {tour.price}
+                      </span>
                       <Button asChild variant="outline" size="sm">
                         <Link to={`/tours#tour-${tour.id}`}>
                           Learn More
@@ -303,8 +355,8 @@ const Index = () => {
               Ready to Explore Morocco?
             </h2>
             <p className="text-xl mb-8 text-primary-foreground/90">
-              Let us create your perfect Moroccan adventure. Share your travel dreams 
-              and we'll craft a personalized journey just for you.
+              Let us create your perfect Moroccan adventure. Share your travel
+              dreams and we'll craft a personalized journey just for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button

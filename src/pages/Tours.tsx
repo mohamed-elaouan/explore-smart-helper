@@ -173,11 +173,11 @@ export default function Tours() {
                         alt={tour.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute top-4 left-4">
+                      {/* <div className="absolute top-4 left-4">
                         <span className="bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-medium">
                           {tour.price}
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                     <CardContent className="p-6 flex flex-col">
                       <h3 className="text-2xl font-serif font-bold mb-2">{tour.title}</h3>
@@ -202,7 +202,7 @@ export default function Tours() {
                           <div key={highlight} className="flex items-center gap-2 text-sm">
                             <Check className="w-4 h-4 text-accent" />
                             <span>{highlight}</span>
-                          </div>
+                          </div>  
                         ))}
                       </div>
                       
