@@ -5,8 +5,12 @@ import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, Quote, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import LightGallery from 'react-lightgallery';
-import 'lightgallery.js/dist/css/lightgallery.css';
+import LightGallery from 'lightgallery/react';
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
 
 const testimonials = [
   {
@@ -178,30 +182,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-// LightGallery settings configuration
-const lightGallerySettings = {
-  thumbnail: true,
-  animateThumb: true,
-  showThumbByDefault: false,
-  thumbWidth: 100,
-  thumbHeight: 80,
-  thumbMargin: 10,
-  download: false,
-  counter: true,
-  zoom: true,
-  actualSize: false,
-  rotate: false,
-  loop: true,
-  swipeToClose: true,
-  closable: true,
-  escKey: true,
-  keyPress: true,
-  controls: true,
-  slideEndAnimatoin: true,
-  hideControlOnEnd: false,
-  speed: 400,
-  mode: 'lg-fade',
-};
+
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -374,10 +355,11 @@ export default function Testimonials() {
           {/* LightGallery Component */}
           <div className="max-w-6xl mx-auto">
             <LightGallery
-              settings={lightGallerySettings}
-              mode="lg-fade"
-              plugins={['lg-thumbnail', 'lg-zoom']}
-              onInit={() => console.log('LightGallery initialized')}
+              speed={400}
+              plugins={[lgThumbnail, lgZoom]}
+              download={false}
+              counter={true}
+              elementClassNames="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
               {galleryImages.map((image, index) => (
                 <a
